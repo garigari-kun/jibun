@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>template test</h1>
+<h1>履歴書のPDF出力テスト</h1>
+<a href = "{% url 'app_cv:cv_generate' %}" class = "btn btn-primary">PDF出力</a>
 {% endblock content %}
