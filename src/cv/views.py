@@ -3,4 +3,5 @@ from django.shortcuts import render
 
 
 def test(request):
-    return HttpResponse('TEST')
+    template = 'cv/test_form.html'
+    return render(request, template, {})
