@@ -21,7 +21,8 @@ def test_generate(request):
     # pdf.save()
 
     cv = CvPdf(response)
-    cv.test_drawing()
+    # cv.test_drawing()
+    cv.tutorial()
     cv.show()
     cv.save()
 
