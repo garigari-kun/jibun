@@ -3,17 +3,42 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.lib.units import cm
 from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+
 
 import datetime
+
+class CVPdf(object):
+
+    def __init__(self, buffer):
+        self.buffer = buffer
+        self.styles = getSampleStyleSheet()
+        self.data = []
+        self.doc = SimpleDocTemplate(self.buffer,
+                                rightMargin = 2*cm,
+                                leftMargin = 2*cm,
+                                topMargin = 2*cm,
+                                bottomMargin = 2*cm,
+                                pagesize = A4
+        )
+        pdfmetrics.registerFont(UnicodeCIDFont('HeiseiMin-W3'))
+
+    def report(self):
+        self.data.append(Paragraph('Title', self.styles['Title']))
+        self.doc.build(self.data)
+        pdf = self.buffer.getvalue()
+        self.buffer.close()
+        #return pdf
+
+
+
 
 class CvPdf(object):
 
     def __init__(self, response):
         self.pdf = canvas.Canvas(response)
         pdfmetrics.registerFont(UnicodeCIDFont('HeiseiMin-W3'))
-        width, height = A4
-        print('width: {}'.format(width))
-        print('height: {}'.format(height))
 
     def test_drawing(self):
         self.pdf.drawString(100, 100, 'Hello, World')
@@ -31,8 +56,6 @@ class CvPdf(object):
         self.pdf.drawString(30,703,'RECEIVED BY:')
         self.pdf.line(120,700,580,700)
         self.pdf.drawString(120,703,"JOHN DOE")
-
-
 
     def show(self):
         self.pdf.showPage()
