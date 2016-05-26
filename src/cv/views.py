@@ -18,7 +18,9 @@ def test_generate(request):
 
     cv = CVPdf(buffer)
     #pdf = cv.report()
-    cv.report()
+    pdf = cv.report()
+    response.write(pdf)
+
 
     # cv = CvPdf(response)
     # # cv.test_drawing()

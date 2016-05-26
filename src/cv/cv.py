@@ -8,6 +8,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 
 import datetime
+from io import BytesIO
 
 class CVPdf(object):
 
@@ -23,13 +24,18 @@ class CVPdf(object):
                                 pagesize = A4
         )
         pdfmetrics.registerFont(UnicodeCIDFont('HeiseiMin-W3'))
+        self.styles.add(ParagraphStyle(name = 'cv_title',
+                                       fontName = 'HeiseiMin-W3',
+                                       fontSize = 20)
+        )
 
     def report(self):
         self.data.append(Paragraph('Title', self.styles['Title']))
+        self.data.append(Paragraph('履　歴　書', self.styles['cv_title']))
         self.doc.build(self.data)
         pdf = self.buffer.getvalue()
         self.buffer.close()
-        #return pdf
+        return pdf
 
 
 
